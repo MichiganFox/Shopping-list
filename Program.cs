@@ -55,38 +55,39 @@ internal class Program
     private static void Main(string[] args)
     {
         Console.WriteLine("Here are the items for sale and their cost: ");
-        Dictionary<string, double> grocerycost = new Dictionary<string, double>();
+        Dictionary<string, decimal> grocerycost = new Dictionary<string, decimal>();
         List<string> cart = new List<string>();
-        List<double> total = new List<double>();
-        grocerycost.Add("milk", 4.50);
-        grocerycost.Add("eggs", 3);
-        grocerycost.Add("juice", 3.95);
-        grocerycost.Add("butter", 3.25);
-        grocerycost.Add("cereal", 5.5);
-        grocerycost.Add("ice cream", 4.19);
-        grocerycost.Add("chips", 2.99);
-        grocerycost.Add("Pizza", 8.95);
+        List<decimal> product = new List<decimal>();
 
-        foreach (KeyValuePair<string, double> kvp in grocerycost)
+        grocerycost.Add("milk", 4.50m);
+        grocerycost.Add("eggs", 3m);
+        grocerycost.Add("juice", 3.95m);
+        grocerycost.Add("butter", 3.25m);
+        grocerycost.Add("cereal", 5.5m);
+        grocerycost.Add("ice cream", 4.19m);
+        grocerycost.Add("chips", 2.99m);
+        grocerycost.Add("pizza", 8.95m);
+
+        foreach (KeyValuePair<string, decimal> kvp in grocerycost)
         {
             Console.WriteLine($"{kvp.Key}: {kvp.Value}");
         }
         bool runprogram = true;
-       do
-        { 
+        do
+        {
             //Ask the user to enter an item name
             Console.WriteLine("Enter an item name:  ");
             var item = Console.ReadLine().ToLower().Trim();
 
-            //If that item exists, display that item and price and add that item to the user’s order.
-            //Console.WriteLine(grocerycost + (item));
-        
-        
+
+
             if (grocerycost.ContainsKey(item))
             {
-                Console.WriteLine($"Your {item} has been added.");
+                Console.WriteLine($"Your {item} for ${grocerycost[item]} has been added.");
                 cart.Add(item);
+                product.Add(grocerycost[item]);
             }
+
             //If that item doesn’t exist, display an error and re-prompt the user.  (Display the menu again if you’d like.)
             else
             {
@@ -109,11 +110,19 @@ internal class Program
             {
                 Console.WriteLine("That was not valid. Try again.");
             }
-                                  
-       }
+            //If that item exists, display that item and price and add that item to the user’s order.
+            //Console.WriteLine(grocerycost + (item));
+
+
+        }
         while (runprogram);
-
-
+        foreach (string s in cart)
+        {
+            Console.WriteLine("Here is your cart: ");
+            Console.WriteLine("Item\t\tPrice\n");
+            decimal final = product.Sum();
+            Console.WriteLine($"Your total bill is: {final}");
+        }
     }
 }
 
